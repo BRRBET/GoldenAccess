@@ -7,191 +7,194 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #1a1a1a, #2b2b2b);
-            color: #ffffff;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            transition: background 0.5s ease; /* Animación de fondo */
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding-top: 20px;
         }
 
         header {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #333;
-            padding: 20px;
-            position: relative;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            background-color: #1E1E1E;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
-        .logo {
+        #logo {
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            background: url('logo.png') no-repeat center center / cover;
         }
 
-        .section {
-            padding: 20px;
-            text-align: center;
-        }
-
-        .mining-section, .withdrawal-section {
-            background: rgba(51, 51, 51, 0.9);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
             width: 90%;
-            max-width: 600px;
         }
 
-        .mine-bar {
-            background: #4caf50;
-            height: 20px;
-            border-radius: 10px;
-            width: 0%;
-            transition: width 1s;
-            margin-top: 10px;
+        #mineBar {
+            width: 100%;
+            height: 30px;
+            background-color: #444;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
         }
 
-        .balance {
-            margin: 10px 0;
-            font-size: 1.5em;
+        #mineBar div {
+            height: 100%;
+            background-color: #4caf50;
+            transition: width 0.3s;
         }
 
         button {
             padding: 10px 20px;
+            margin: 10px;
             border: none;
             border-radius: 5px;
-            background-color: #4caf50;
-            color: white;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
+            color: #fff;
+            background-color: #2196F3;
             transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #1976D2;
         }
 
-        .profile-wallet {
-            display: flex;
-            justify-content: space-between;
+        #withdrawalList {
             margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .profile-wallet div {
-            text-align: center;
-            width: 45%;
-            padding: 10px;
-            background: #444;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-wallet img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .withdrawal-list {
-            margin-top: 20px;
-            background: #444;
-            padding: 10px;
-            border-radius: 8px;
-            position: relative;
+            width: 100%;
+            max-height: 100px;
+            overflow-y: auto;
         }
 
         .withdrawal-item {
+            background-color: #282828;
             margin: 5px 0;
-            opacity: 1;
-            transition: opacity 2s;
-            font-size: 0.9em;
+            padding: 5px;
+            border-radius: 5px;
+            transition: opacity 0.5s;
         }
 
-        /* Estilo para el botón de soporte */
-        .support-button {
+        .footer-buttons {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: auto;
+            padding: 20px 0;
+            border-top: 1px solid #333;
+            background-color: #1E1E1E;
+        }
+
+        .footer-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-button img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        #infoSection {
+            background-color: #1E1E1E;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        #supportButton {
             position: fixed;
             right: 20px;
-            bottom: 20px;
+            bottom: 100px;
             width: 50px;
             height: 50px;
-            background: url('support.png') no-repeat center center / cover;
+            background: url('support.png') no-repeat center center;
+            background-size: contain;
             border: none;
             cursor: pointer;
-            z-index: 100;
         }
 
-        /* Estilo para el botón flotante de perfil */
-        .floating-button {
-            position: fixed;
-            top: 80px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
-            background: url('profile.png') no-repeat center center / cover;
-            border: none;
-            cursor: pointer;
+        #supportButton:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"></div>
+        <img id="logo" src="logo.png" alt="Logo">
         <h1>Minería de USDT</h1>
-        <button class="support-button" onclick="window.location.href='soporte.html'"></button>
     </header>
-    
-    <div class="section">
-        <h2>¿Cómo Funciona?</h2>
-        <p>La minería de USDT te permite acumular esta criptomoneda a través de un proceso simple y efectivo. Cada 24 horas puedes reclamar tus ganancias.</p>
-    </div>
 
-    <div class="mining-section">
-        <h3>Minería</h3>
-        <div class="mine-bar" id="mineBar"></div>
-        <div class="balance" id="balance">Balance: 0.00000000 USDT</div>
+    <div class="container">
+        <div id="mineBar"><div style="width: 0%;"></div></div>
+        <h2 id="statusMessage">Estado: Esperando inicio...</h2>
+        <h3>Balance: <span id="balance">0.00000000 USDT</span></h3>
         <button id="startButton">Iniciar Minería</button>
-        <div id="statusMessage"></div>
         <button id="claimButton" style="display: none;">Reclamar USDT</button>
+
+        <div id="withdrawalList"></div>
+
+        <div id="infoSection">
+            <h4>¿Cómo Funciona?</h4>
+            <p>La minería de USDT es simple y accesible. Al iniciar la minería, tu balance se incrementará automáticamente cada segundo hasta alcanzar el límite de 1 USDT en 24 horas. ¡Es así de fácil!</p>
+            <h4>¿Quiénes Somos?</h4>
+            <p>Somos un equipo dedicado a ofrecer oportunidades de inversión y minería de criptomonedas, asegurando que nuestros usuarios tengan la mejor experiencia posible.</p>
+        </div>
     </div>
 
-    <div class="profile-wallet">
-        <div>
+    <div class="footer-buttons">
+        <div class="footer-button">
             <img src="profile.png" alt="Perfil">
-            <h4>Perfil</h4>
+            <button onclick="window.location.href='perfil.html'">Perfil</button>
         </div>
-        <div>
-            <img src="wallet.png" alt="Wallet">
-            <h4>Billetera</h4>
-            <p id="walletBalance">10.00000000 USDT</p> <!-- Ejemplo de saldo en billetera -->
+        <div class="footer-button">
+            <img src="wallet.png" alt="Billetera">
+            <button onclick="window.location.href='wallet.html'">Billetera</button>
+        </div>
+        <div class="footer-button">
+            <img src="howitworks.png" alt="Cómo Funciona">
+            <button onclick="window.location.href='howitworks.html'">Cómo Funciona</button>
+        </div>
+        <div class="footer-button">
+            <img src="support.png" alt="Soporte">
+            <button onclick="window.location.href='support.html'">Soporte</button>
+        </div>
+        <div class="footer-button">
+            <img src="faq.png" alt="FAQ">
+            <button onclick="window.location.href='faq.html'">FAQ</button>
         </div>
     </div>
 
-    <div class="withdrawal-section">
-        <h3>Retiros Simulados</h3>
-        <div class="withdrawal-list" id="withdrawalList"></div>
-    </div>
-
-    <button class="floating-button" onclick="window.location.href='perfil.html'"></button>
+    <button id="supportButton" onclick="window.location.href='support.html'"></button>
 
     <script>
         // Configuración inicial
-        const mineBar = document.getElementById('mineBar');
+        const mineBar = document.getElementById('mineBar').children[0];
         const balanceElement = document.getElementById('balance');
         const statusMessage = document.getElementById('statusMessage');
         const startButton = document.getElementById('startButton');
         const claimButton = document.getElementById('claimButton');
         const withdrawalList = document.getElementById('withdrawalList');
         let mineProgress = 0;
-        const miningDuration = 86400000; // 24 horas en milisegundos
-        const claimAmount = 1.00000000; // 1 USDT
+        let miningDuration = 86400000; // 24 horas en milisegundos
+        let claimAmount = 1.00000000;
         let balance = 0;
 
         // Activa el botón de iniciar minería al presionar enter
