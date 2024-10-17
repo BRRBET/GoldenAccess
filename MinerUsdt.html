@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,6 +84,53 @@
             font-size: 1.2rem;
             color: #ffcc00;
         }
+
+        /* Estilo para los botones con imágenes */
+        .nav-buttons {
+            margin-top: 30px;
+        }
+
+        .nav-buttons img {
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Sección de "Cómo Funciona" y "Quiénes Somos" */
+        .info-section {
+            margin-top: 40px;
+        }
+
+        .info-section a {
+            color: #00d9ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .support-button {
+            display: inline-block;
+            background-color: #ff4081;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .support-button:hover {
+            background-color: #e73370;
+        }
+
     </style>
 </head>
 <body>
@@ -100,13 +147,29 @@
         <button id="claimButton" class="button claim" disabled>Reclamar 1.00000000 USDT</button>
 
         <div class="status-message" id="statusMessage">Esperando para iniciar...</div>
+
+        <!-- Sección de botones con imágenes -->
+        <div class="nav-buttons">
+            <a href="pagina1.html"><img src="imagen1.png" alt="Página 1"></a>
+            <a href="pagina2.html"><img src="imagen2.png" alt="Página 2"></a>
+            <a href="pagina3.html"><img src="imagen3.png" alt="Página 3"></a>
+            <a href="pagina4.html"><img src="imagen4.png" alt="Página 4"></a>
+            <a href="pagina5.html"><img src="imagen5.png" alt="Página 5"></a>
+        </div>
+
+        <!-- Sección de información y soporte -->
+        <div class="info-section">
+            <a href="como-funciona.html">Cómo Funciona</a>
+            <a href="quienes-somos.html">Quiénes Somos</a>
+            <a href="soporte.html" class="support-button">Soporte</a>
+        </div>
     </div>
 
     <script>
         // Variables
         let balance = 0.00000000;
         let mineProgress = 0;
-        const miningDuration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        const miningDuration = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
         const claimAmount = 1.00000000;
         const mineBar = document.getElementById('mineBar');
         const balanceElement = document.getElementById('balance');
@@ -114,31 +177,43 @@
         const startButton = document.getElementById('startButton');
         const statusMessage = document.getElementById('statusMessage');
 
-        let miningInterval; // Intervalo de minería
+        let miningInterval, updateInterval; // Intervalos de minería y actualización de balance
 
-        // Función para actualizar el progreso de la minería
+        // Función para iniciar la minería
         const startMining = () => {
-            statusMessage.innerText = "Minería en progreso...";
+            statusMessage.innerText = "Minería en progreso... 24 horas restantes";
             startButton.disabled = true;
             mineProgress = 0;
             mineBar.style.width = '0%';
 
+            const startTime = Date.now();
             miningInterval = setInterval(() => {
-                mineProgress += 1000; // Aumentar progreso cada segundo
+                const elapsed = Date.now() - startTime;
+                mineProgress = Math.min(elapsed, miningDuration); // Asegurarse de que no exceda las 24 horas
                 const percentage = (mineProgress / miningDuration) * 100;
                 mineBar.style.width = percentage + '%';
+
+                const remainingTime = Math.max(miningDuration - elapsed, 0);
+                statusMessage.innerText = `Minería en progreso... ${Math.ceil(remainingTime / 3600000)} horas restantes`;
 
                 if (mineProgress >= miningDuration) {
                     claimButton.disabled = false;
                     statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
                     clearInterval(miningInterval);
+                    clearInterval(updateInterval);
                 }
+            }, 1000);
+
+            // Actualizar el balance cada segundo
+            updateInterval = setInterval(() => {
+                balance = (mineProgress / miningDuration) * claimAmount;
+                balanceElement.innerText = balance.toFixed(8);
             }, 1000);
         };
 
         // Función para reclamar el USDT minado
         claimButton.addEventListener('click', () => {
-            balance += claimAmount;
+            balance = claimAmount; // Completar a 1 USDT
             balanceElement.innerText = balance.toFixed(8);
 
             // Reset para la siguiente ronda de minería
