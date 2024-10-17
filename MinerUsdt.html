@@ -85,20 +85,39 @@
             color: #ffcc00;
         }
 
-        /* Estilo para los botones con imágenes */
+        /* Botones flotantes con imágenes */
         .nav-buttons {
-            margin-top: 30px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-buttons img {
             width: 50px;
             height: 50px;
-            margin: 10px;
+            margin: 10px 0;
             cursor: pointer;
             transition: transform 0.2s ease;
         }
 
         .nav-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Botón flotante de soporte */
+        .support-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .support-button:hover {
             transform: scale(1.1);
         }
 
@@ -113,22 +132,6 @@
             font-size: 1.2rem;
             margin: 10px 0;
             display: block;
-        }
-
-        .support-button {
-            display: inline-block;
-            background-color: #ff4081;
-            color: #fff;
-            padding: 15px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .support-button:hover {
-            background-color: #e73370;
         }
 
     </style>
@@ -148,22 +151,24 @@
 
         <div class="status-message" id="statusMessage">Esperando para iniciar...</div>
 
-        <!-- Sección de botones con imágenes -->
-        <div class="nav-buttons">
-            <a href="pagina1.html"><img src="imagen1.png" alt="Página 1"></a>
-            <a href="pagina2.html"><img src="imagen2.png" alt="Página 2"></a>
-            <a href="pagina3.html"><img src="imagen3.png" alt="Página 3"></a>
-            <a href="pagina4.html"><img src="imagen4.png" alt="Página 4"></a>
-            <a href="pagina5.html"><img src="imagen5.png" alt="Página 5"></a>
-        </div>
-
-        <!-- Sección de información y soporte -->
+        <!-- Sección de información -->
         <div class="info-section">
             <a href="como-funciona.html">Cómo Funciona</a>
             <a href="quienes-somos.html">Quiénes Somos</a>
-            <a href="soporte.html" class="support-button">Soporte</a>
         </div>
     </div>
+
+    <!-- Botones flotantes con imágenes -->
+    <div class="nav-buttons">
+        <a href="pagina1.html"><img src="imagen1.png" alt="Página 1"></a>
+        <a href="pagina2.html"><img src="imagen2.png" alt="Página 2"></a>
+        <a href="pagina3.html"><img src="imagen3.png" alt="Página 3"></a>
+        <a href="pagina4.html"><img src="imagen4.png" alt="Página 4"></a>
+        <a href="pagina5.html"><img src="imagen5.png" alt="Página 5"></a>
+    </div>
+
+    <!-- Botón flotante de soporte -->
+    <a href="soporte.html"><img src="soporte.png" alt="Soporte" class="support-button"></a>
 
     <script>
         // Variables
