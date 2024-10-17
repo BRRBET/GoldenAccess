@@ -4,163 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minería de USDT</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            background: linear-gradient(to bottom, #141e30, #243b55);
             color: white;
+            text-align: center;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Evita el scroll horizontal */
         }
-        header {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: relative;
+        
+        .mining-section {
+            margin-top: 50px;
         }
-        header img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%; /* Hacer la imagen circular */
-        }
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-        .progress-container {
-            background: #ddd;
-            border-radius: 25px;
-            overflow: hidden;
+
+        .mining-bar {
+            width: 80%;
             height: 30px;
-            margin: 20px 0;
+            background-color: #ddd;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
         }
-        .progress-bar {
-            background: #28a745;
+
+        .mining-bar-fill {
             height: 100%;
             width: 0;
-            transition: width 1s ease;
+            background-color: #76c7c0;
+            border-radius: 15px;
+            transition: width 0.5s ease;
         }
-        .button {
-            background-color: #007bff;
-            color: white;
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #28a745;
             border: none;
+            color: white;
             padding: 10px 20px;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            margin: 5px;
+            transition: background-color 0.3s ease;
         }
-        .button:hover {
-            background-color: #0056b3;
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
-        .footer {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-        .withdrawal {
-            position: absolute;
-            white-space: nowrap;
-            color: #FFD700; /* Color dorado */
-            font-weight: bold;
-            animation: move 10s linear forwards;
-        }
-        @keyframes move {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
-        .scoreboard {
+
+        .floating-buttons {
             position: fixed;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
             display: flex;
+            justify-content: center;
             gap: 10px;
         }
-        .scoreboard button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            border-radius: 50%;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .spacer {
-            height: 80vh; /* Espaciador para el desplazamiento */
-        }
-        .floating-icon {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            cursor: pointer;
+
+        .floating-buttons img {
             width: 50px;
             height: 50px;
+            cursor: pointer;
         }
+
+        .withdrawals {
+            margin-top: 50px;
+        }
+
+        .withdrawal-item {
+            font-size: 14px;
+            opacity: 1;
+            transition: opacity 2s ease-out;
+        }
+
+        .spacer {
+            height: 300px;
+        }
+
+        .floating-support {
+            position: fixed;
+            right: 10px;
+            bottom: 100px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
-<header>
-    <img src="logo.png" alt="Logo">
-    <h1>Minería de USDT 💰</h1>
-    <img src="support-icon.png" class="floating-icon" alt="Soporte" onclick="window.location.href='soporte.html'">
-</header>
-
-<div class="container">
-    <div class="spacer"></div> <!-- Spacer para permitir el desplazamiento -->
-    
-    <h2>Comienza a minar USDT</h2>
-    <button class="button" id="startButton">Iniciar Minería</button>
-    
-    <div class="progress-container">
-        <div class="progress-bar" id="mineBar"></div>
+    <div class="mining-section">
+        <h2>Minería Automática de USDT</h2>
+        <div class="mining-bar">
+            <div class="mining-bar-fill" id="mineBar"></div>
+        </div>
+        <p id="statusMessage">Presiona <strong>Enter</strong> para activar el botón de minar.</p>
+        <div class="buttons">
+            <button id="startButton" disabled>Iniciar Minería</button>
+            <button id="claimButton" style="display: none;">Reclamar 1 USDT</button>
+        </div>
+        <p>Balance actual: <span id="balance">0.00000000 USDT</span></p>
     </div>
-    
-    <p id="statusMessage">Estado de minería: Listo para empezar</p>
-    <p id="balance">Balance: 0.00000000 USDT</p>
-    <button class="button" id="claimButton" style="display: none;">Reclamar 1 USDT</button>
-    
-    <h3>¿Cómo funciona? 🤔</h3>
-    <p>Al iniciar la minería, podrás reclamar 1 USDT cada 24 horas. Tu balance se actualizará automáticamente.</p>
-    
-    <h3>¿Quiénes somos? 🌟</h3>
-    <p>Somos un equipo dedicado a ofrecer la mejor experiencia en minería de criptomonedas. ¡Únete a nosotros!</p>
-</div>
 
-<div class="scoreboard">
-    <button onclick="window.location.href='pagina1.html'"><img src="icon1.png" alt="Icono 1" width="30"></button>
-    <button onclick="window.location.href='pagina2.html'"><img src="icon2.png" alt="Icono 2" width="30"></button>
-    <button onclick="window.location.href='pagina3.html'"><img src="icon3.png" alt="Icono 3" width="30"></button>
-    <button onclick="window.location.href='pagina4.html'"><img src="icon4.png" alt="Icono 4" width="30"></button>
-    <button onclick="window.location.href='pagina5.html'"><img src="icon5.png" alt="Icono 5" width="30"></button>
-</div>
+    <!-- Simulador de retiros -->
+    <div class="withdrawals">
+        <h3>💸 Retiros en tiempo real</h3>
+        <div id="withdrawalList"></div>
+    </div>
 
-<div class="footer">
-    <p>¡Disfruta de tu experiencia de minería! 🌐</p>
-</div>
+    <!-- Botones flotantes -->
+    <div class="floating-buttons">
+        <img src="boton1.png" onclick="window.location.href='pagina1.html';">
+        <img src="boton2.png" onclick="window.location.href='pagina2.html';">
+        <img src="boton3.png" onclick="window.location.href='pagina3.html';">
+        <img src="boton4.png" onclick="window.location.href='pagina4.html';">
+        <img src="boton5.png" onclick="window.location.href='pagina5.html';">
+    </div>
+
+    <!-- Botón flotante de soporte -->
+    <img class="floating-support" src="soporte.png" onclick="window.location.href='soporte.html';">
+
+    <!-- Spacer para permitir desplazarse hacia abajo -->
+    <div class="spacer"></div>
 
 <script>
+    // Configuración inicial
     const mineBar = document.getElementById('mineBar');
+    const balanceElement = document.getElementById('balance');
+    const statusMessage = document.getElementById('statusMessage');
     const startButton = document.getElementById('startButton');
     const claimButton = document.getElementById('claimButton');
-    const statusMessage = document.getElementById('statusMessage');
-    const balanceElement = document.getElementById('balance');
-
-    let miningDuration = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
-    let claimAmount = 1.0; // USDT
-    let mineProgress = 0; // Progreso inicial
+    const withdrawalList = document.getElementById('withdrawalList');
+    let mineProgress = 0;
+    let miningDuration = 86400000; // 24 horas en milisegundos
+    let claimAmount = 1.00000000;
     let balance = 0;
 
-    function startMining() {
-        startButton.disabled = true; // Desactivar botón al iniciar
-        statusMessage.innerText = "Minería en progreso...";
+    // Activa el botón de iniciar minería al presionar enter
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            startButton.disabled = false;
+            statusMessage.innerText = '¡Ahora puedes iniciar la minería!';
+        }
+    });
 
+    // Función para iniciar la minería
+    startButton.addEventListener('click', () => {
+        startMining();
+        startButton.disabled = true;
+    });
+
+    function startMining() {
+        const startTime = Date.now();
         const interval = setInterval(() => {
-            mineProgress += 1000; // Incrementar progreso cada segundo
+            mineProgress += 1000; // Incremento cada segundo
             const percentage = (mineProgress / miningDuration) * 100;
             mineBar.style.width = percentage + '%';
+
             balance = (mineProgress / miningDuration) * claimAmount;
             balanceElement.innerText = balance.toFixed(8) + " USDT";
 
@@ -168,84 +172,41 @@
                 clearInterval(interval);
                 statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
                 claimButton.style.display = 'block';
-                simulateWithdrawals(); // Iniciar simulación de retiros
             }
-        }, 1000); // Cada segundo
+        }, 1000);
     }
 
+    // Simulador de retiros
     function simulateWithdrawals() {
-        const withdrawals = [
-            "10 USDT a dirección: T9eP9zZq1Fx5Y4xSxL2C2N4sDd4w",
-            "15 USDT a dirección: T6UeA5x8kA4cF6aC8G4H6G9sDd6f",
-            "20 USDT a dirección: T8wD8B9hG9B6eP9sW4F7Y6G5hG3r",
-            "30 USDT a dirección: T5D8D7fC2T2fF5Z7bG2F2N4mDg9",
-            "25 USDT a dirección: T4K8M7x8cC6D5hK6gH3N9L9kA4J8"
+        const usdtAddresses = [
+            "T1Ej9HX7Fm2n8oPq1r9k7xY3kp3oMfZ3Dv",
+            "T3V8Ldy8EX6Fbwo7bG4eQ9FrU2J1c7yYtF",
+            "T9C9H8J7Lo3MzDm8wP5Kr6Q7Et9F1aP8Kt",
+            "T5H7Bx6Wx8Jv8KdL2y7Np2Fm4uB8Q6DfYq"
         ];
 
-        withdrawals.forEach((withdrawal, index) => {
+        setInterval(() => {
+            const amount = (Math.random() * (50 - 10) + 10).toFixed(2); // Entre 10 y 50 USDT
+            const address = usdtAddresses[Math.floor(Math.random() * usdtAddresses.length)];
+            const withdrawalItem = document.createElement('div');
+            withdrawalItem.classList.add('withdrawal-item');
+            withdrawalItem.innerHTML = `⭐ Retiro de ${amount} USDT a la dirección: ${address}`;
+            withdrawalList.appendChild(withdrawalItem);
+
+            // Desaparece lentamente
             setTimeout(() => {
-                const withdrawalElement = document.createElement('div');
-                withdrawalElement.className = 'withdrawal';
-                withdrawalElement.innerText = withdrawal;
-                document.body.appendChild(withdrawalElement);
-                
-                setTimeout(() => {
-                    withdrawalElement.style.opacity = '0'; // Desvanecer el elemento
-                    setTimeout(() => {
-                        withdrawalElement.remove(); // Eliminar el elemento del DOM
-                    }, 4000); // Esperar a que se complete la animación antes de eliminar
-                }, 100); // Tiempo para que aparezca el texto antes de comenzar la animación
-            }, index * 3000); // Retraso entre cada retiro
-        });
+                withdrawalItem.style.opacity = 0;
+            }, 5000);
+
+            setTimeout(() => {
+                withdrawalItem.remove();
+            }, 7000);
+        }, 3000);
     }
 
-    // Al cargar la página, revisamos si ya había un progreso previo
-    window.onload = () => {
-        const savedProgress = localStorage.getItem('mineProgress');
-        const savedStartTime = localStorage.getItem('startTime');
-        const savedBalance = localStorage.getItem('balance');
-
-        if (savedProgress && savedStartTime) {
-            const elapsed = Date.now()- parseInt(savedStartTime);
-            mineProgress = Math.min(elapsed, miningDuration);
-            const percentage = (mineProgress / miningDuration) * 100;
-            mineBar.style.width = percentage + '%';
-
-            balance = (mineProgress / miningDuration) * claimAmount;
-            balanceElement.innerText = balance.toFixed(8) + " USDT";
-
-            if (mineProgress >= miningDuration) {
-                statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
-                claimButton.style.display = 'block';
-            } else {
-                statusMessage.innerText = `Minería en progreso... ${Math.ceil((miningDuration - mineProgress) / 3600000)} horas restantes`;
-                startMining();
-            }
-        }
-    };
-
-    // Guardar el estado cada segundo
-    setInterval(() => {
-        localStorage.setItem('mineProgress', mineProgress);
-        localStorage.setItem('startTime', Date.now() - mineProgress);
-        localStorage.setItem('balance', balance);
-    }, 1000);
-
-    // Resetear al reclamar el USDT
-    claimButton.addEventListener('click', () => {
-        localStorage.removeItem('mineProgress');
-        localStorage.removeItem('startTime');
-        localStorage.removeItem('balance');
-        
-        // Restablecer la barra de progreso y el balance
-        mineProgress = 0;
-        balance = 0;
-        mineBar.style.width = '0';
-        balanceElement.innerText = '0.00000000 USDT';
-        claimButton.style.display = 'none';
-        statusMessage.innerText = 'Estado de minería: Listo para empezar';
-        startButton.disabled = false; // Habilitar el botón de inicio
-    });
+    // Inicia la simulación de retiros
+    simulateWithdrawals();
 </script>
+
 </body>
 </html>
