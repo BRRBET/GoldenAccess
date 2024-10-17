@@ -7,180 +7,169 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #141e30, #243b55);
-            color: #fff;
             margin: 0;
             padding: 0;
-        }
-
-        #header {
+            background: linear-gradient(135deg, #f3f4f6, #e0e7ff);
+            color: #333;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
         }
 
-        #logo {
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+        h1 {
+            margin: 20px 0;
+            color: #4a4e69;
         }
 
-        #mineContainer {
-            text-align: center;
-            margin: 20px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
+        #container {
+            background: #ffffff;
             border-radius: 10px;
-            width: 80%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
         }
 
         #mineBar {
-            background: #4caf50;
-            height: 30px;
+            width: 100%;
+            background-color: #d1fae5;
             border-radius: 5px;
-            transition: width 0.5s ease;
+            height: 20px;
+            margin: 10px 0;
+            position: relative;
         }
 
-        #withdrawalList {
-            margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
+        #mineProgress {
+            height: 100%;
+            background-color: #34d399;
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s;
+        }
+
+        button {
+            background-color: #4a4e69;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #6a7f9a;
         }
 
         .withdrawal-item {
+            margin: 5px 0;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #e5e5e5;
             border-radius: 5px;
-            margin-bottom: 10px;
-            opacity: 1;
-            transition: opacity 1s ease;
+            transition: opacity 0.5s;
         }
 
-        .withdrawal-item.fade {
-            opacity: 0;
-        }
-
-        #footer {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .button {
-            background: rgba(0, 0, 0, 0.7);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .button:hover {
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        .footer-button {
-            width: 50px;
-            height: 50px;
-        }
-
-        #floatingSupport {
+        .floating-buttons {
             position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background: #4caf50;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             justify-content: center;
-            align-items: center;
-            cursor: pointer;
         }
 
-        #infoSection {
-            margin: 20px auto;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            width: 80%;
+        .floating-buttons img {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
+
+        .floating-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        .support-button {
+            position: fixed;
+            right: 10px;
+            bottom: 80px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #34d399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .support-button img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
     </style>
 </head>
 <body>
-    <div id="header">
-        <img id="logo" src="logo.png" alt="Logo">
+    <div id="container">
+        <img src="logo.png" alt="Logo" style="width: 100px; border-radius: 50%;">
         <h1>Minería de USDT</h1>
+        <div id="mineBar">
+            <div id="mineProgress"></div>
+        </div>
+        <div id="balance">0.00000000 USDT</div>
+        <button id="startButton">Iniciar Minería</button>
+        <div id="statusMessage">¡Presiona 'Iniciar Minería' para comenzar!</div>
+        <button id="claimButton" style="display: none;">Reclamar USDT</button>
+        <h3>Retiros Recientes:</h3>
+        <div id="withdrawalList"></div>
     </div>
 
-    <div id="mineContainer">
-        <h2>Estado de Minería</h2>
-        <div id="mineBar" style="width: 0%;"></div>
-        <p id="statusMessage">¡Bienvenido! Presiona Enter para empezar a minar.</p>
-        <p>Balance: <span id="balance">0.00000000</span> USDT</p>
-        <button id="startButton" class="button" disabled>Iniciar Minería</button>
-        <button id="claimButton" class="button" style="display: none;">Reclamar USDT</button>
+    <div class="floating-buttons">
+        <img src="profile.png" alt="Perfil" onclick="location.href='profile.html'">
+        <img src="wallet.png" alt="Wallet" onclick="location.href='wallet.html'">
+        <img src="about.png" alt="Sobre Nosotros" onclick="location.href='about.html'">
+        <img src="faq.png" alt="FAQ" onclick="location.href='faq.html'">
+        <img src="contact.png" alt="Contacto" onclick="location.href='contact.html'">
     </div>
 
-    <div id="withdrawalList"></div>
-
-    <div id="infoSection">
-        <h3>¿Cómo Funciona?</h3>
-        <p>Aquí puedes minar USDT de forma sencilla. Solo tienes que iniciar la minería y esperar 24 horas para reclamar tu balance.</p>
-        <h3>¿Quiénes Somos?</h3>
-        <p>Somos un equipo comprometido con ofrecer las mejores oportunidades de inversión en criptomonedas.</p>
+    <div class="support-button" onclick="location.href='support.html'">
+        <img src="support-icon.png" alt="Soporte">
     </div>
 
-    <div id="footer">
-        <button class="button" id="profileButton">Perfil</button>
-        <button class="button" id="walletButton">Wallet</button>
-        <button class="button" id="supportButton">Soporte</button>
-    </div>
-
-    <div id="floatingSupport" onclick="window.location.href='support.html'">
-        <img src="support-icon.png" alt="Soporte" style="width: 30px; height: 30px;">
+    <div class="footer">
+        <p>© 2024 Minería de USDT. Todos los derechos reservados.</p>
+        <p>Cómo Funciona: Minar USDT automáticamente cada 24 horas.</p>
+        <p>Quiénes Somos: Un equipo dedicado a la minería de criptomonedas.</p>
     </div>
 
     <script>
         // Configuración inicial
         const mineBar = document.getElementById('mineBar');
+        const mineProgress = document.getElementById('mineProgress');
         const balanceElement = document.getElementById('balance');
         const statusMessage = document.getElementById('statusMessage');
         const startButton = document.getElementById('startButton');
         const claimButton = document.getElementById('claimButton');
         const withdrawalList = document.getElementById('withdrawalList');
-        let mineProgress = 0;
-        let miningDuration = 86400000; // 24 horas en milisegundos
-        let claimAmount = 1.00000000;
+        let currentProgress = 0;
+        const miningDuration = 86400000; // 24 horas en milisegundos
+        const claimAmount = 1.00000000;
         let balance = 0;
-
-        // Al cargar la página, revisamos si ya había un progreso previo
-        window.onload = () => {
-            const savedProgress = localStorage.getItem('mineProgress');
-            const savedStartTime = localStorage.getItem('startTime');
-            const savedBalance = localStorage.getItem('balance');
-            
-            if (savedProgress && savedStartTime) {
-                const elapsed = Date.now() - parseInt(savedStartTime);
-                mineProgress = Math.min(elapsed, miningDuration);
-                const percentage = (mineProgress / miningDuration) * 100;
-                mineBar.style.width = percentage + '%';
-
-                balance = (mineProgress / miningDuration) * claimAmount;
-                balanceElement.innerText = balance.toFixed(8);
-
-                if (mineProgress >= miningDuration) {
-                    statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
-                    claimButton.style.display = 'block';
-                } else {
-                    statusMessage.innerText = `Minería en progreso... ${Math.ceil((miningDuration - mineProgress) / 3600000)} horas restantes`;
-                    startMining();
-                }
-            }
-        };
 
         // Función para iniciar la minería
         startButton.addEventListener('click', () => {
@@ -191,19 +180,14 @@
         function startMining() {
             const startTime = Date.now();
             const interval = setInterval(() => {
-                mineProgress += 1000; // Incremento cada segundo
-                const percentage = (mineProgress / miningDuration) * 100;
-                mineBar.style.width = percentage + '%';
+                currentProgress += 1000; // Incremento cada segundo
+                const percentage = (currentProgress / miningDuration) * 100;
+                mineProgress.style.width = percentage + '%';
 
-                balance = (mineProgress / miningDuration) * claimAmount;
+                balance = (currentProgress / miningDuration) * claimAmount;
                 balanceElement.innerText = balance.toFixed(8) + " USDT";
 
-                // Guardar el estado cada segundo
-                localStorage.setItem('mineProgress', mineProgress);
-                localStorage.setItem('startTime', Date.now() - mineProgress);
-                localStorage.setItem('balance', balance);
-
-                if (mineProgress >= miningDuration) {
+                if (currentProgress >= miningDuration) {
                     clearInterval(interval);
                     statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
                     claimButton.style.display = 'block';
@@ -225,38 +209,28 @@
                 const address = usdtAddresses[Math.floor(Math.random() * usdtAddresses.length)];
                 const withdrawalItem = document.createElement('div');
                 withdrawalItem.classList.add('withdrawal-item');
-                withdrawalItem.innerHTML = `⭐ Retiro de ${amount} USDT a la dirección: <strong>${address}</strong>`;
+                withdrawalItem.innerHTML = `⭐ Retiro de ${amount} USDT a la dirección: ${address}`;
                 withdrawalList.appendChild(withdrawalItem);
 
                 // Desaparece lentamente
                 setTimeout(() => {
-                    withdrawalItem.classList.add('fade');
+                    withdrawalItem.style.opacity = 0;
                 }, 5000);
 
                 setTimeout(() => {
                     withdrawalItem.remove();
                 }, 7000);
-            }, 3000);}
+            }, 3000);
+        }
 
         // Inicia la simulación de retiros
         simulateWithdrawals();
 
-        // Activar el botón de iniciar minería al presionar enter
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                startButton.disabled = false;
-                statusMessage.innerText = '¡Ahora puedes iniciar la minería!';
-            }
-        });
-
         // Resetear al reclamar el USDT
         claimButton.addEventListener('click', () => {
-            localStorage.removeItem('mineProgress');
-            localStorage.removeItem('startTime');
-            localStorage.removeItem('balance');
             balance = 0;
-            mineProgress = 0;
-            mineBar.style.width = '0%';
+            currentProgress = 0;
+            mineProgress.style.width = '0%';
             balanceElement.innerText = '0.00000000';
             claimButton.style.display = 'none';
             statusMessage.innerText = '¡Reclamo realizado! Puedes iniciar de nuevo.';
