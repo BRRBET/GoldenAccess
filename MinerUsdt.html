@@ -12,9 +12,23 @@
             color: #ffffff;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
         h1 {
             color: #61dafb;
+        }
+        #logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        #logo img {
+            width: 100%;
+            height: auto;
         }
         #progressContainer {
             width: 100%;
@@ -76,9 +90,32 @@
             width: 100px;
             cursor: pointer;
         }
+        #infoSection {
+            margin-top: 30px;
+            text-align: left;
+        }
+        #withdrawAnimation {
+            position: relative;
+            height: 50px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .withdraw {
+            position: absolute;
+            width: 100px;
+            height: 30px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            opacity: 1;
+            transition: transform 4s ease, opacity 4s ease;
+        }
     </style>
 </head>
 <body>
+    <div id="logo">
+        <img src="logo.png" alt="Logo">
+    </div>
     <h1>Minería de USDT</h1>
     <div id="progressContainer">
         <div id="mineBar"></div>
@@ -98,6 +135,15 @@
 
     <img id="floatingImage" src="floating-image.png" alt="Imagen Flotante" onclick="location.href='another-page.html'">
 
+    <div id="infoSection">
+        <h2>¿Cómo funciona?</h2>
+        <p>La minería de USDT es un proceso sencillo donde puedes ganar criptomonedas de forma automática cada 24 horas. Simplemente presiona el botón de "Iniciar Minería" y comienza a ganar.</p>
+        <h2>¿Quiénes somos?</h2>
+        <p>Somos un grupo de entusiastas de las criptomonedas comprometidos a proporcionar herramientas y recursos para que las personas puedan participar en el mundo de las criptomonedas de manera segura y eficiente.</p>
+    </div>
+
+    <div id="withdrawAnimation"></div>
+
     <script>
         const miningDuration = 24 * 60 * 60 * 1000; // 24 horas en milisegundos
         const claimAmount = 1.00000000;
@@ -108,6 +154,7 @@
         const balanceElement = document.getElementById('balanceElement');
         const claimButton = document.getElementById('claimButton');
         const startButton = document.getElementById('startButton');
+        const withdrawAnimation = document.getElementById('withdrawAnimation');
 
         function startMining() {
             startButton.disabled = true;
@@ -126,11 +173,39 @@
                     clearInterval(miningInterval);
                     statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
                     claimButton.style.display = 'block';
+                    simulateWithdrawals(); // Iniciar simulación de retiros
                 } else {
                     const hoursRemaining = Math.ceil((miningDuration - mineProgress) / 3600000);
                     statusMessage.innerText = `Minería en progreso... ${hoursRemaining} horas restantes`;
                 }
             }, 1000); // Actualización cada segundo
+        }
+
+        function simulateWithdrawals() {
+            const addresses = [
+                "T9Av2G8VEX4sVqX6z9jP1Lv5eE7yfhC1p6",
+                "T12345ABCDEF1234567890GHIJKLMNOPQR",
+                "T09876ZYXWVUTSRQPONMLKJIHGFEDCBA",
+                "T7G8H9I10J11K12LMNOPQ12R13S14T15U",
+                "T1W2X3Y4Z5A6B7C8D9E0F1G2H3I4J5K6L"
+            ];
+
+            addresses.forEach((address, index) => {
+                setTimeout(() => {
+                    const withdrawal = document.createElement('div');
+                    withdrawal.className = 'withdraw';
+                    withdrawal.innerText = `Retiro: 10 USDT a ${address}`;
+                    withdrawal.style.top = `${Math.random() * (withdrawAnimation.clientHeight - 30)}px`;
+                    withdrawal.style.left = '100%'; // Comenzar desde la derecha
+                    withdrawAnimation.appendChild(withdrawal);
+                    setTimeout(() => {
+                        withdrawal.style.opacity = '0'; // Desvanecer el elemento
+                        setTimeout(() => {
+                            withdrawal.remove(); // Eliminar el elemento del DOM
+                        }, 4000); // Esperar a que se complete la animación antes de eliminar
+                    }, 100); // Tiempo para que aparezca el texto antes de comenzar la animación
+                }, index * 3000); // Retraso entre cada retiro
+            });
         }
 
         // Al cargar la página, revisamos si ya había un progreso previo
@@ -151,6 +226,7 @@
                 if (mineProgress >= miningDuration) {
                     statusMessage.innerText = "¡Minería completada! Puedes reclamar tu USDT.";
                     claimButton.style.display = 'block';
+                    simulateWithdrawals(); // Iniciar simulación de retiros
                 } else {
                     statusMessage.innerText = `Minería en progreso... ${Math.ceil((miningDuration - mineProgress) / 3600000)} horas restantes`;
                     startMining();
@@ -175,6 +251,9 @@
             localStorage.removeItem('balance');
             claimButton.style.display = 'none';
             statusMessage.innerText = "Has reclamado 1 USDT. ¡Gracias!";
+            // Reiniciar el balance para la próxima sesión
+            balance = 0;
+            balanceElement.innerText = balance.toFixed(8) + " USDT";
         });
     </script>
 </body>
