@@ -4,18 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minería de USDT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(to bottom, #141e30, #243b55);
-            color: white;
-            text-align: center;
+            color: #ffffff;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
-        
+
+        header {
+            background: #1a1a1a;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        header img {
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 10px 0;
+        }
+
         .mining-section {
-            margin-top: 50px;
+            margin-top: 100px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .mining-bar {
@@ -35,10 +61,6 @@
             transition: width 0.5s ease;
         }
 
-        .buttons {
-            margin-top: 20px;
-        }
-
         button {
             background-color: #28a745;
             border: none;
@@ -47,7 +69,7 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button:disabled {
@@ -55,19 +77,9 @@
             cursor: not-allowed;
         }
 
-        .floating-buttons {
-            position: fixed;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .floating-buttons img {
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
+        button:hover:not(:disabled) {
+            background-color: #218838;
+            transform: scale(1.05);
         }
 
         .withdrawals {
@@ -84,6 +96,27 @@
             height: 300px;
         }
 
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .floating-buttons img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+
+        .floating-buttons img:hover {
+            transform: scale(1.1);
+        }
+
         .floating-support {
             position: fixed;
             right: 10px;
@@ -91,11 +124,42 @@
             width: 60px;
             height: 60px;
             cursor: pointer;
+            transition: transform 0.2s;
         }
 
+        .floating-support:hover {
+            transform: scale(1.1);
+        }
+
+        .info-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-section h3 {
+            margin-top: 0;
+        }
+
+        .info-section p {
+            text-align: left;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
+
+    <header>
+        <div class="navigation">
+            <img src="logo.png" alt="Logo">
+            <nav>
+                <a href="#how-it-works" style="color: white; margin: 0 15px;">¿Cómo Funciona?</a>
+                <a href="#about-us" style="color: white; margin: 0 15px;">¿Quiénes Somos?</a>
+            </nav>
+        </div>
+    </header>
 
     <div class="mining-section">
         <h2>Minería Automática de USDT</h2>
@@ -103,20 +167,18 @@
             <div class="mining-bar-fill" id="mineBar"></div>
         </div>
         <p id="statusMessage">Presiona <strong>Enter</strong> para activar el botón de minar.</p>
-        <div class="buttons">
+        <div>
             <button id="startButton" disabled>Iniciar Minería</button>
             <button id="claimButton" style="display: none;">Reclamar 1 USDT</button>
         </div>
         <p>Balance actual: <span id="balance">0.00000000 USDT</span></p>
     </div>
 
-    <!-- Simulador de retiros -->
     <div class="withdrawals">
         <h3>💸 Retiros en tiempo real</h3>
         <div id="withdrawalList"></div>
     </div>
 
-    <!-- Botones flotantes -->
     <div class="floating-buttons">
         <img src="boton1.png" onclick="window.location.href='pagina1.html';">
         <img src="boton2.png" onclick="window.location.href='pagina2.html';">
@@ -125,11 +187,19 @@
         <img src="boton5.png" onclick="window.location.href='pagina5.html';">
     </div>
 
-    <!-- Botón flotante de soporte -->
     <img class="floating-support" src="soporte.png" onclick="window.location.href='soporte.html';">
 
-    <!-- Spacer para permitir desplazarse hacia abajo -->
     <div class="spacer"></div>
+
+    <div class="info-section" id="how-it-works">
+        <h3>¿Cómo Funciona?</h3>
+        <p>La minería de USDT es un proceso automático donde puedes reclamar 1 USDT cada 24 horas. Simplemente haz clic en "Iniciar Minería" y deja que el sistema trabaje por ti.</p>
+    </div>
+
+    <div class="info-section" id="about-us">
+        <h3>¿Quiénes Somos?</h3>
+        <p>Somos un equipo dedicado a proporcionar las mejores soluciones de minería de criptomonedas. Nuestro objetivo es ofrecer un servicio confiable y seguro para todos nuestros usuarios.</p>
+    </div>
 
 <script>
     // Configuración inicial
