@@ -4,189 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minería de USDT</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #2c3e50, #34495e);
+            color: #ecf0f1;
             margin: 0;
-            background-color: #121212;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            padding-top: 20px;
+            padding: 20px;
         }
 
         header {
-            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            background-color: #1E1E1E;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
         }
 
-        #logo {
-            border-radius: 50%;
+        .logo {
             width: 50px;
             height: 50px;
+            border-radius: 50%;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        h1 {
+            margin: 0;
+        }
+
+        #miningContainer {
+            background: rgba(44, 62, 80, 0.8);
+            padding: 20px;
+            border-radius: 8px;
             margin: 20px 0;
-            width: 90%;
         }
 
         #mineBar {
-            width: 100%;
-            height: 30px;
-            background-color: #444;
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 20px 0;
+            height: 20px;
+            background: #27ae60;
+            border-radius: 10px;
+            transition: width 1s;
         }
 
-        #mineBar div {
-            height: 100%;
-            background-color: #4caf50;
-            transition: width 0.3s;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 10px;
+        .button {
+            padding: 10px 15px;
+            background: #2980b9;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            color: #fff;
-            background-color: #2196F3;
-            transition: background-color 0.3s;
+            transition: background 0.3s;
         }
 
-        button:hover {
-            background-color: #1976D2;
+        .button:hover {
+            background: #3498db;
         }
 
-        #withdrawalList {
+        .withdrawal-list {
             margin-top: 20px;
-            width: 100%;
-            max-height: 100px;
-            overflow-y: auto;
         }
 
         .withdrawal-item {
-            background-color: #282828;
-            margin: 5px 0;
-            padding: 5px;
+            background: #16a085;
+            padding: 10px;
             border-radius: 5px;
-            transition: opacity 0.5s;
+            margin: 5px 0;
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        .withdrawal-item.fade {
+            opacity: 0;
         }
 
         .footer-buttons {
             display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-top: auto;
-            padding: 20px 0;
-            border-top: 1px solid #333;
-            background-color: #1E1E1E;
-        }
-
-        .footer-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .footer-button img {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 5px;
-        }
-
-        #infoSection {
-            background-color: #1E1E1E;
-            padding: 20px;
-            border-radius: 5px;
+            justify-content: center;
             margin-top: 20px;
-            width: 100%;
         }
 
-        #supportButton {
-            position: fixed;
-            right: 20px;
-            bottom: 100px;
+        .footer-buttons img {
             width: 50px;
             height: 50px;
-            background: url('support.png') no-repeat center center;
-            background-size: contain;
-            border: none;
-            cursor: pointer;
+            margin: 0 10px;
+            transition: transform 0.2s;
         }
 
-        #supportButton:hover {
-            opacity: 0.8;
+        .footer-buttons img:hover {
+            transform: scale(1.1);
+        }
+
+        .floating-button {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #e74c3c;
+            border-radius: 50%;
+            padding: 15px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .floating-button:hover {
+            background: #c0392b;
+        }
+
+        .info-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(46, 204, 113, 0.2);
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
     <header>
-        <img id="logo" src="logo.png" alt="Logo">
+        <img src="logo.png" alt="Logo" class="logo">
         <h1>Minería de USDT</h1>
     </header>
 
-    <div class="container">
-        <div id="mineBar"><div style="width: 0%;"></div></div>
-        <h2 id="statusMessage">Estado: Esperando inicio...</h2>
-        <h3>Balance: <span id="balance">0.00000000 USDT</span></h3>
-        <button id="startButton">Iniciar Minería</button>
-        <button id="claimButton" style="display: none;">Reclamar USDT</button>
-
-        <div id="withdrawalList"></div>
-
-        <div id="infoSection">
-            <h4>¿Cómo Funciona?</h4>
-            <p>La minería de USDT es simple y accesible. Al iniciar la minería, tu balance se incrementará automáticamente cada segundo hasta alcanzar el límite de 1 USDT en 24 horas. ¡Es así de fácil!</p>
-            <h4>¿Quiénes Somos?</h4>
-            <p>Somos un equipo dedicado a ofrecer oportunidades de inversión y minería de criptomonedas, asegurando que nuestros usuarios tengan la mejor experiencia posible.</p>
-        </div>
+    <div id="miningContainer">
+        <h2>Minería Automática</h2>
+        <div id="mineBar" style="width: 0%;"></div>
+        <p id="statusMessage">Estado de minería: Listo para iniciar</p>
+        <p>Balance acumulado: <span id="balance">0.00000000</span> USDT</p>
+        <button id="startButton" class="button">Iniciar Minería</button>
+        <button id="claimButton" class="button" style="display: none;">Reclamar USDT</button>
     </div>
+
+    <div class="info-section">
+        <h3>¿Cómo Funciona?</h3>
+        <p>La minería automática de USDT permite acumular balance durante 24 horas. Al finalizar, puedes reclamar tus ganancias.</p>
+        <h3>¿Quiénes Somos?</h3>
+        <p>Somos un equipo dedicado a ofrecer soluciones de minería de criptomonedas de manera accesible y segura.</p>
+    </div>
+
+    <div class="withdrawal-list" id="withdrawalList"></div>
 
     <div class="footer-buttons">
-        <div class="footer-button">
-            <img src="profile.png" alt="Perfil">
-            <button onclick="window.location.href='perfil.html'">Perfil</button>
-        </div>
-        <div class="footer-button">
-            <img src="wallet.png" alt="Billetera">
-            <button onclick="window.location.href='wallet.html'">Billetera</button>
-        </div>
-        <div class="footer-button">
-            <img src="howitworks.png" alt="Cómo Funciona">
-            <button onclick="window.location.href='howitworks.html'">Cómo Funciona</button>
-        </div>
-        <div class="footer-button">
-            <img src="support.png" alt="Soporte">
-            <button onclick="window.location.href='support.html'">Soporte</button>
-        </div>
-        <div class="footer-button">
-            <img src="faq.png" alt="FAQ">
-            <button onclick="window.location.href='faq.html'">FAQ</button>
-        </div>
+        <img src="profile.png" alt="Perfil" onclick="location.href='perfil.html'">
+        <img src="wallet.png" alt="Wallet" onclick="location.href='wallet.html'">
+        <img src="about.png" alt="Acerca de" onclick="location.href='acerca.html'">
+        <img src="support.png" alt="Soporte" onclick="location.href='soporte.html'">
+        <img src="faq.png" alt="FAQ" onclick="location.href='faq.html'">
     </div>
 
-    <button id="supportButton" onclick="window.location.href='support.html'"></button>
+    <button class="floating-button" onclick="location.href='soporte.html'">?</button>
 
     <script>
         // Configuración inicial
-        const mineBar = document.getElementById('mineBar').children[0];
+        const mineBar = document.getElementById('mineBar');
         const balanceElement = document.getElementById('balance');
         const statusMessage = document.getElementById('statusMessage');
         const startButton = document.getElementById('startButton');
@@ -248,7 +216,7 @@
 
                 // Desaparece lentamente
                 setTimeout(() => {
-                    withdrawalItem.style.opacity = 0;
+                    withdrawalItem.classList.add('fade');
                 }, 5000);
 
                 setTimeout(() => {
