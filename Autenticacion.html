@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - DOW Mall</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #008000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tabs div {
+            cursor: pointer;
+            padding: 10px;
+            width: 50%;
+        }
+        .tabs div.active {
+            background-color: #004400;
+            color: white;
+            border-radius: 5px;
+        }
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 35px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            background-color: #004400;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-link {
+            margin-top: 10px;
+            display: block;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <img src="logo.png" alt="DOW Mall" class="logo" width="100">
+
+        <!-- Tabs for registration options -->
+        <div class="tabs">
+            <div class="active">Regístrese por correo electrónico</div>
+            <div>Regístrese por teléfono</div>
+        </div>
+
+        <!-- Formulario de registro -->
+        <form action="#">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="email" name="confirm-email" placeholder="Escriba el correo otra vez" required>
+
+            <div style="position: relative;">
+                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+                <span class="eye-icon" onclick="togglePasswordVisibility()">👁️</span>
+            </div>
+            <div style="position: relative;">
+                <input type="password" name="confirm-password" id="confirm-password" placeholder="Escriba la contraseña otra vez" required>
+                <span class="eye-icon" onclick="toggleConfirmPasswordVisibility()">👁️</span>
+            </div>
+
+            <input type="text" name="invitation-code" placeholder="Código de invitación (opcional)">
+
+            <button type="submit" class="submit-btn">Inscribirse</button>
+        </form>
+
+        <a href="#" class="login-link">Iniciar sesión</a>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+
+        function toggleConfirmPasswordVisibility() {
+            const confirmPasswordField = document.getElementById('confirm-password');
+            if (confirmPasswordField.type === 'password') {
+                confirmPasswordField.type = 'text';
+            } else {
+                confirmPasswordField.type = 'password';
+            }
+        }
+    </script>
+
+</body>
+</html>
