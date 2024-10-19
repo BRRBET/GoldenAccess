@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - VIPVIP-09</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b5345;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #0e6251;
+            padding: 20px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+        .tabs div {
+            cursor: pointer;
+            padding: 10px;
+            width: 50%;
+        }
+        .tabs div.active {
+            background-color: #004400;
+            color: white;
+            border-radius: 5px;
+        }
+        input[type="email"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 35px;
+            cursor: pointer;
+        }
+        .submit-btn {
+            background-color: #004400;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .register-link {
+            margin-top: 10px;
+            display: block;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo -->
+        <img src="https://github.com/user-attachments/assets/167aa681-19c6-4b63-b70c-7a6d0d1064b0" alt="DOW Mall" class="logo" width="100">
+
+        <!-- Tabs for login options -->
+        <div class="tabs">
+            <div class="active">Iniciar sesión por correo electrónico</div>
+        </div>
+        <!-- Formulario de inicio de sesión -->
+        <form action="Home.html">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+
+            <div style="position: relative;">
+                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+                <span class="eye-icon" onclick="togglePasswordVisibility()"></span>
+            </div>
+
+            <button type="submit" class="submit-btn">Iniciar sesión</button>
+        </form>
+
+        <a href="Registro.html" class="register-link">¿No tienes una cuenta? Regístrate aquí</a>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        }
+    </script>
+
+</body>
+</html>
