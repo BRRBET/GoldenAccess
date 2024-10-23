@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificacion-User</title>
+    <title>Iniciar Sesión</title>
     <style>
         body {
             background: linear-gradient(75deg, #FFC300, #FFD700); /* Fondo degradado */
@@ -65,101 +65,18 @@
         .register-link:hover {
             text-decoration: underline; /* Subrayar el enlace al pasar el ratón */
         }
-
-        /* Estilo para la alerta personalizada */
-        .alert {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            text-align: center;
-            z-index: 1000;
-        }
-
-        .alert button {
-            background: #4CAF50; /* Color verde para el botón de la alerta */
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
     </style>
-    <script>
-        // Variable para verificar si se ha mostrado la alerta
-        let alertShown = false;
-
-        function checkLogin(event) {
-            event.preventDefault(); // Evitar el envío del formulario
-
-            const email = document.querySelector('input[type="email"]').value;
-            const password = document.querySelector('input[type="password"]').value;
-
-            // Aquí puedes agregar lógica para verificar si el usuario está registrado
-            const isRegistered = false; // Cambia esto según tu lógica
-
-            if (!isRegistered && !alertShown) {
-                showAlert("Esta Cuenta No Está Registrada. Si está registrada, dale Aceptar y vuelve a iniciar.");
-                alertShown = true; // Marcar que la alerta ya se mostró
-            } else if (isRegistered) {
-                // Si está registrado, redirigir a la página de inicio
-                window.location.href = 'Home.html'; // Cambia a la página de inicio
-            }
-        }
-
-        function showAlert(message) {
-            const alert = document.querySelector('.alert');
-            const overlay = document.querySelector('.overlay');
-            alert.textContent = message; // Establecer el mensaje de alerta
-            alert.style.display = 'block'; // Mostrar alerta
-            overlay.style.display = 'block'; // Mostrar fondo oscuro
-        }
-
-        function closeAlert() {
-            const alert = document.querySelector('.alert');
-            const overlay = document.querySelector('.overlay');
-            alert.style.display = 'none'; // Ocultar alerta
-            overlay.style.display = 'none'; // Ocultar fondo oscuro
-        }
-    </script>
 </head>
 <body>
 
     <div class="form-container">
         <h2>Iniciar Sesión</h2>
-        <form onsubmit="checkLogin(event)"> <!-- Usar JavaScript para manejar el envío -->
+        <form action="Home.html" method="POST"> <!-- Cambia a la página destino -->
             <input type="email" placeholder="Email" required>
             <input type="password" placeholder="Contraseña" required>
             <button type="submit">Iniciar Sesión</button>
         </form>
-        <a href="Autenticacion.html" class="register-link">Crear una cuenta</a>
-    </div>
-
-    <!-- Overlay para la alerta -->
-    <div class="overlay" onclick="closeAlert()"></div>
-
-    <!-- Alerta personalizada -->
-    <div class="alert">
-        <p></p>
-        <button onclick="closeAlert()">Aceptar</button> <!-- Botón de Aceptar -->
+        <a href="Registro.html" class="register-link">Crear una cuenta</a>
     </div>
 
 </body>
